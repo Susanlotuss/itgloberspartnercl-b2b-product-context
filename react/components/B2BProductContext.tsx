@@ -23,7 +23,7 @@ const B2BProductContext = () => {
         body: JSON.stringify({
           "items": [
             {
-              "id": "23",
+              "id": `${productId}`,
               "quantity": 1,
               "seller": "1"
             }
@@ -42,7 +42,13 @@ const B2BProductContext = () => {
 
       console.log(aval, "aqui", aval.items[0].availability)
 
-      const available = aval.items[0].availability
+      let available = aval.items[0].availability
+
+      if (available === 'cannotBeDelivered') {
+        available = 'Not available'
+      } else {
+        return available
+      }
 
       console.log(available)
 
@@ -51,14 +57,14 @@ const B2BProductContext = () => {
     }
     useEffect(() => {
       getAvailable()
-    }, [])
+    }, [productId])
 
 
   return (
     <>
     <div>
       <p>Id: {productId}</p>
-      <p>Available: {JSON.stringify(getAval, null, 4)}</p>
+      <p>Availability: {JSON.stringify(getAval, null, 4)}</p>
     </div>
     </>
   )
